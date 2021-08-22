@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import StoredResources from '@/StoredResources';
+import StoredResources from '@/components/learning-resources/StoredResources';
 import TheHeader from '@/layouts/TheHeader';
 
 export default {

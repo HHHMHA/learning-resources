@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import BaseCard from '@/UI/BaseCard';
 import BaseButton from '@/UI/BaseButton';
-import App from './App';
+import App from '@/App';
 
 const app = createApp( App );
 

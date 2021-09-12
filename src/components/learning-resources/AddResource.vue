@@ -1,6 +1,15 @@
 <template>
+    <base-dialog v-if='inputIsInvalid' title='Invalid Input' @close='confirmError'>
+        <template #default>
+            <p>Unfortunately, at least one input value is invalid.</p>
+            <p>Please check all inputs and make sure you enter at least a few characters in each field</p>
+        </template>
+        <template #actions>
+            <base-button @click='confirmError'>Okay</base-button>
+        </template>
+    </base-dialog>
     <base-card>
-        <form @submit.prevent='addResource(form.title, form.description, form.link)'>
+        <form @submit.prevent='submit'>
             <div class='form-control'>
                 <label for='title'>Title</label>
                 <input type='text' id='title' name='title' v-model='form.title' />
@@ -13,7 +22,7 @@
 
             <div class='form-control'>
                 <label for='link'>Link</label>
-                <input type='url' id='link' name='link' v-model='form.link'/>
+                <input type='url' id='link' name='link' v-model='form.link' />
             </div>
 
             <div>
@@ -28,15 +37,28 @@ export default {
     name: 'AddResource',
     data() {
         return {
+            inputIsInvalid: false,
             form: {
-                title: "",
-                description: "",
-                link: "",
+                title: '',
+                description: '',
+                link: ''
             }
-        }
+        };
     },
     inject: ['addResource'],
     methods: {
+        submit() {
+            for (const value of Object.values(this.form)) {
+                if (!value) {
+                    this.inputIsInvalid = true;
+                    return;
+                }
+            }
+            this.addResource(this.form.title, this.form.description, this.form.link);
+        },
+        confirmError() {
+          this.inputIsInvalid = false;
+        },
     }
 };
 </script>
